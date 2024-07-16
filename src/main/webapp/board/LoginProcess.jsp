@@ -4,7 +4,7 @@
     pageEncoding="UTF-8"%>
 <%    
 String userId = request.getParameter("user_id");
-String userPwd = request.getParameter("user_pw");
+String userPwd = request.getParameter("user_pwd");
 
 MemberDAO dao = new MemberDAO();
 MemberDTO memberDTO = dao.getMember(userId, userPwd);

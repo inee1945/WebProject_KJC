@@ -12,17 +12,17 @@ public class MemberDAO extends JDBConnect {
     }
     
   //로그인.
-    public MemberDTO getMember(String uid, String upass) {
+    public MemberDTO getMember(String id, String pass) {
 		MemberDTO dto = new MemberDTO();
 		String query = "select * from member where id=? and pass=?";
 		try {
 			psmt = con.prepareStatement(query);
-			psmt.setString(1, uid);
-			psmt.setString(2, upass);
+			psmt.setString(1, id);
+			psmt.setString(2, pass);
 			rs = psmt.executeQuery();
 
 			if (rs.next()) {
-				dto.setId(rs.getString("id"));
+				dto.setId(rs.getString(1));
 				dto.setPass(rs.getString(2));
 				dto.setName(rs.getString(3));
 				dto.setRegidate(rs.getString(4));
@@ -33,6 +33,21 @@ public class MemberDAO extends JDBConnect {
 		return dto;
 	}
 
-  
+  //회원가입
+    public int setJoin(String id, String pass, String name) {
+    	MemberDTO dto = new MemberDTO();
+    	int result = 0;
+    	String query = "insert into member (id, pass, name, regidate) values(?, ?,?,sysdate)";
+    	try {
+    		psmt = con.prepareStatement(query);
+    		psmt.setString(1, id);
+    		psmt.setString(2, pass);
+    		psmt.setString(3, name);
+    		result = psmt.executeUpdate();
+    	}catch(Exception e) {
+    		e.printStackTrace();
+    	}
+    	return result;
+    }
     
 }

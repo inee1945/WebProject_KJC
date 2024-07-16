@@ -18,15 +18,9 @@ public class LoginController extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-	}
-	
-    @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp)
-        throws ServletException, IOException {
-        // 게시물 불러오기
+	   
     	MemberDAO dao = new MemberDAO();
-    	MemberDTO dto = dao.getMember(req.getParameter("user_id"), req.getParameter("user_pw"));
+    	MemberDTO dto = dao.getMember(req.getParameter("user_id"), req.getParameter("user_pwd"));
     
     	HttpSession session=req.getSession();  
     	session.setAttribute("UserId", dto.getId());

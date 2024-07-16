@@ -39,12 +39,21 @@
 	<form action="../board/login.do" method="post" name = "loginFrm"
 		onsubmit ="return validateForm(this)">
 		아이디 : <input type = "text" name="user_id"/><br />
-		패스워드 : <input type="password" name ="user_pw"/><br />
+		패스워드 : <input type="password" name ="user_pwd"/><br />
 		<input type ="submit" value="로그인하기" />
 	</form>
 	<%
 	}else{
 	%>
+		<%
+		if(session.getAttribute("JoinErrMsg")!=null){
+		%>
+			<script type="text/javascript">
+			alert("회원가입을 축하드립니다.");
+			</script>
+		<%
+		}
+		%>
 		<%=session.getAttribute("UserName") %>회원님, 로그인하셨습니다.<br />
 		<a href="Logout.jsp">[로그아웃]</a>
 	<%		
