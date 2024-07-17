@@ -25,7 +25,8 @@ public class LoginController extends HttpServlet {
     	HttpSession session=req.getSession();  
     	session.setAttribute("UserId", dto.getId());
 		session.setAttribute("UserName",dto.getName());
-		session.setAttribute("LoginErrMsg","로그인 오류입니다.");
+		session.setAttribute("UserPwd",dto.getPass());
+		req.setAttribute("LoginErrMsg","로그인 오류입니다.");
 		        
         // 로그인정보 저장 후 로그인화면으로 포워드
 		if(dto!=null) {

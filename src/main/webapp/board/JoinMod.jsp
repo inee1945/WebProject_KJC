@@ -9,31 +9,24 @@
 <script src="./js/common.js"></script>
 </head>
 <body>
-	
 
-	<%
-		if(session.getAttribute("JoinErrMsg")!=null){		
-	%>
-		<script type="text/javascript">
-			alert("회원가입이 실패하였습니다.");
-			</script>
-	<%
-		}
-	%>
-    <h1>회원가입</h1>
-    <form method="post" action="../board/join.do" name = "loginFrm" 
+<span>
+	<%=request.getAttribute("JoinErrMsg")==null? "":request.getAttribute("JoinErrMsg") %>
+</span>
+    <h1>회원정보 수정</h1>
+    <form method="post" action="../board/joinMod.do" name = "loginFrm" 
     	onsubmit ="return validateForm_join(this)">
         <label for="userID">아이디:</label>
-        <input type="text" id="userID" name="user_id" >
+        <input type="text" id="userID" name="user_id" value = "<%= session.getAttribute("UserId") %>" readonly="readonly">
         <br>
         <label for="userPassword">비밀번호:</label>
-        <input type="password" id="userPass" name="user_pwd" >
+        <input type="password" id="userPass" name="user_pwd" value = "<%= session.getAttribute("UserPwd") %>">
         <br>
         <label for="userName">이름:</label>
-        <input type="text" id="userName" name="user_name" >
+        <input type="text" id="userName" name="user_name" value = "<%= session.getAttribute("UserName") %>">
         <br>
        
-        <input type="submit" value="가입">
+        <input type="submit" value="수정">
     </form>
 </body>
 </html>

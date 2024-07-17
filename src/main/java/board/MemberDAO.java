@@ -50,4 +50,21 @@ public class MemberDAO extends JDBConnect {
     	return result;
     }
     
+    //회원정보수정
+    public int updateJoin(String id, String pass, String name) {
+    	MemberDTO dto = new MemberDTO();
+    	int result = 0;
+    	String query = "update member set   pass = ?, name =? , regidate=sysdate  where id = ? ";
+    	try {
+    		psmt = con.prepareStatement(query);
+    		psmt.setString(3, id);
+    		psmt.setString(1, pass);
+    		psmt.setString(2, name);
+    		result = psmt.executeUpdate();
+    	}catch(Exception e) {
+    		e.printStackTrace();
+    	}
+    	return result;
+    }
+    
 }

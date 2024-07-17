@@ -10,8 +10,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import oracle.jdbc.driver.Message;
 
-@WebServlet("/board/join.do")
-public class JoinController extends HttpServlet{
+@WebServlet("/board/joinMod.do")
+public class JoinModController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String id = 	req.getParameter("user_id");
@@ -19,7 +19,7 @@ public class JoinController extends HttpServlet{
 		String name = 	req.getParameter("user_name");
 		
 		MemberDAO dao = new MemberDAO();
-		int rs = dao.setJoin(id, pwd, name);
+		int rs = dao.updateJoin(id, pwd, name);
 		dao.close();
 		
     	HttpSession session=req.getSession();  
@@ -29,11 +29,11 @@ public class JoinController extends HttpServlet{
 			req.setAttribute("rs", rs);
 			session.setAttribute("UserId", id);
 			session.setAttribute("UserName",name);
-		    session.setAttribute("JoinErrMsg","회원가입이 완료되었습니다..");
+		    req.setAttribute("JoinErrMsg","회원정보 수정이 완료되었습니다..");
 		    req.getRequestDispatcher("/board/Login.jsp").forward(req, resp);
 		}else {
-			  session.setAttribute("JoinErrMsg","회원가입이 실패하였습니다.");
-			  req.getRequestDispatcher("/board/Join.jsp").forward(req, resp);
+			req.setAttribute("JoinErrMsg","회원정보 수정이 실패하였습니다.");
+			  req.getRequestDispatcher("/board/JoinMod.jsp").forward(req, resp);
 		}
 		
 	}

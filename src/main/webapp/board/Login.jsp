@@ -6,39 +6,27 @@
 <head>
 <meta charset="UTF-8">
 <title>Session</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="./js/common.js"></script>
 </head>
 <body>
 	<h2>로그인 페이지</h2>
-	
+	<input type="hidden" name = "status" id="status" value="off">
+
 	<%
 	if(session.getAttribute("UserId")==null){		
 	%>
 		<%
-		if(session.getAttribute("LoginErrMsg")!=null){
+		if(request.getAttribute("LoginErrMsg")!=null){
 		%>
-			<%=session.getAttribute("LoginErrMsg") %>아이디 비번을 확인하세요.<br />
+			<%=request.getAttribute("LoginErrMsg") %>아이디 비번을 확인하세요.<br />
 		<%
 		}
 		%>
-		
-	<script>
-	function validateForm(form){
-		if(!form.user_id.value){
-			alert("아이디를 입력하세요..");
-			form.user_id.focus();
-			return false;
-		}
-		if(form.user_pw.value==""){
-			alert("패스워드를 입력하세요")
-			form.user_pw.focus()
-			return false;
-		}
-	}
-	</script>	
 	
 	<form action="../board/login.do" method="post" name = "loginFrm"
-		onsubmit ="return validateForm(this)">
-		아이디 : <input type = "text" name="user_id"/><br />
+		onsubmit ="return validateForm_login(this)">
+		아이디 : <input type = "text" id ="user_id" name="user_id"/><br />
 		패스워드 : <input type="password" name ="user_pwd"/><br />
 		<input type ="submit" value="로그인하기" />
 	</form>
@@ -48,14 +36,16 @@
 		<%
 		if(session.getAttribute("JoinErrMsg")!=null){
 		%>
-			<script type="text/javascript">
-			alert("회원가입을 축하드립니다.");
-			</script>
+			
+			<%=request.getAttribute("JoinErrMsg") %><br />
 		<%
 		}
 		%>
 		<%=session.getAttribute("UserName") %>회원님, 로그인하셨습니다.<br />
+			
 		<a href="Logout.jsp">[로그아웃]</a>
+		<a href="JoinMod.jsp"  >[회원정보 수정]</a>
+		<a href="../board/list.do">[자유게시판]</a>
 	<%		
 	}
 	%>	

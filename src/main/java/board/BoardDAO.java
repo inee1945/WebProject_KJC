@@ -9,13 +9,10 @@ public class BoardDAO extends JDBConnect {
     public BoardDAO() {
         super();
     }
-
-    
-    
     // 검색 조건에 맞는 게시물의 개수를 반환합니다.
     public int selectCount(Map<String, Object> map) {
         int totalCount = 0;
-        String query = "SELECT COUNT(*) FROM mvcboard";
+        String query = "SELECT COUNT(*) FROM board";
         if (map.get("searchWord") != null) {
             query += " WHERE " + map.get("searchField") + " "
                    + " LIKE '%" + map.get("searchWord") + "%'";
@@ -34,12 +31,12 @@ public class BoardDAO extends JDBConnect {
     }
 
     // 검색 조건에 맞는 게시물 목록을 반환합니다(페이징 기능 지원).
-    public List<BoardDTO> selectListPage(Map<String,Object> map) {
-        List<BoardDTO> board = new Vector<BoardDTO>();
+    public List<BoardDTO> getBoardList(Map<String,Object> map) {
+        List<BoardDTO> boardList = new Vector<BoardDTO>();
         String query = " "
                      + "SELECT * FROM ( "
-                     + "    SELECT Tb.*, ROWNUM rNum FROM ( "
-                     + "        SELECT * FROM mvcboard ";
+                     + "    SELECT A.*, ROWNUM rNum FROM ( "
+                     + "        SELECT * FROM board ";
 
         if (map.get("searchWord") != null)
         {
@@ -47,8 +44,8 @@ public class BoardDAO extends JDBConnect {
                    + " LIKE '%" + map.get("searchWord") + "%' ";
         }
 
-        query += "        ORDER BY idx DESC "
-               + "    ) Tb "
+        query += "        ORDER BY postdate DESC "
+               + "    ) A "
                + " ) "
                + " WHERE rNum BETWEEN ? AND ?";
 
@@ -72,14 +69,14 @@ public class BoardDAO extends JDBConnect {
                 dto.setPass(rs.getString(9));
                 dto.setVisitcount(rs.getInt(10));
 
-                board.add(dto);
+                boardList.add(dto);
             }
         }
         catch (Exception e) {
             System.out.println("게시물 조회 중 예외 발생");
             e.printStackTrace();
         }
-        return board;
+        return boardList;
     }
     public int insertWrite(BoardDTO dto) {
         int result = 0;
@@ -105,7 +102,7 @@ public class BoardDAO extends JDBConnect {
     }
     public BoardDTO selectView(String idx) {
         BoardDTO dto = new BoardDTO();  // DTO 객체 생성
-        String query = "SELECT * FROM mvcboard WHERE idx=?";  // 쿼리문 템플릿 준비
+        String query = "SELECT * FROM board WHERE idx=?";  // 쿼리문 템플릿 준비
         try {
             psmt = con.prepareStatement(query);  // 쿼리문 준비
             psmt.setString(1, idx);  // 인파라미터 설정
