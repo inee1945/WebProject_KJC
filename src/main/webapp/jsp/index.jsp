@@ -4,6 +4,8 @@
 <%@ include file="../common/head.jsp" %>
 
 <body>
+
+
   <!--  Body Wrapper -->
   <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
     data-sidebar-position="fixed" data-header-position="fixed">
@@ -115,24 +117,36 @@
             </li>
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-              <span class="hide-menu">EXTRA</span>
+              <span class="hide-menu">게시판</span>
             </li>
+           
+           
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./icon-tabler.html" aria-expanded="false">
+              <a class="sidebar-link" href="../board/list.do?bk=A" onclick="return loginChk(${SessionId});"aria-expanded="false">
                 <span>
                   <i class="ti ti-mood-happy"></i>
                 </span>
-                <span class="hide-menu">Icons</span>
+                <span class="hide-menu">자유게시판</span>
               </a>
             </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="./sample-page.html" aria-expanded="false">
+             <li class="sidebar-item">
+              <a class="sidebar-link" href="../board/list.do?bk=B" aria-expanded="false"onclick="return loginChk(${SessionId});">
                 <span>
-                  <i class="ti ti-aperture"></i>
+                  <i class="ti ti-mood-happy"></i>
                 </span>
-                <span class="hide-menu">Sample Page</span>
+                <span class="hide-menu">Q&A 게시판</span>
               </a>
             </li>
+             <li class="sidebar-item">
+              <a class="sidebar-link" href="../board/list.do?bk=C" aria-expanded="false"onclick="return loginChk(${SessionId});">
+                <span>
+                  <i class="ti ti-mood-happy"></i>
+                </span>
+                <span class="hide-menu">자료실 게시판</span>
+              </a>
+            </li>
+            
+            
           </ul>
           <div class="unlimited-access hide-menu bg-light-primary position-relative mb-7 mt-5 rounded">
             <div class="d-flex">

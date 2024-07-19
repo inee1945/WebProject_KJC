@@ -66,9 +66,8 @@ public class BoardDAO extends JDBConnect {
                 dto.setOfile(rs.getString(6));
                 dto.setSfile(rs.getString(7));
                 dto.setDowncount(rs.getInt(8));
-                dto.setPass(rs.getString(9));
-                dto.setVisitcount(rs.getInt(10));
-
+                dto.setVisitcount(rs.getInt(9));
+                dto.setId(rs.getString(10));
                 boardList.add(dto);
             }
         }
@@ -81,8 +80,8 @@ public class BoardDAO extends JDBConnect {
     public int insertWrite(BoardDTO dto) {
         int result = 0;
         try {
-            String query = "INSERT INTO mvcboard ( "
-                         + " idx, name, title, content, ofile, sfile, pass) "
+            String query = "INSERT INTO board ( "
+                         + " idx, name, title, content, ofile, sfile, id) "
                          + " VALUES ( "
                          + " seq_board_num.NEXTVAL,?,?,?,?,?,?)";
             psmt = con.prepareStatement(query);
@@ -91,7 +90,7 @@ public class BoardDAO extends JDBConnect {
             psmt.setString(3, dto.getContent());
             psmt.setString(4, dto.getOfile());
             psmt.setString(5, dto.getSfile());
-            psmt.setString(6, dto.getPass());
+            psmt.setString(6, dto.getId());
             result = psmt.executeUpdate();
         }
         catch (Exception e) {
@@ -117,8 +116,8 @@ public class BoardDAO extends JDBConnect {
                 dto.setOfile(rs.getString(6));
                 dto.setSfile(rs.getString(7));
                 dto.setDowncount(rs.getInt(8));
-                dto.setPass(rs.getString(9));
-                dto.setVisitcount(rs.getInt(10));
+                dto.setVisitcount(rs.getInt(9));
+                dto.setId(rs.getString(10));
             }
         }
         catch (Exception e) {
@@ -130,7 +129,7 @@ public class BoardDAO extends JDBConnect {
 
   
     public void updateVisitCount(String idx) {
-        String query = "UPDATE mvcboard SET "
+        String query = "UPDATE board SET "
                      + " visitcount=visitcount+1 "
                      + " WHERE idx=?"; 
         try {
@@ -145,7 +144,7 @@ public class BoardDAO extends JDBConnect {
     }
     // 다운로드 횟수를 1 증가시킵니다.
     public void downCountPlus(String idx) {
-        String sql = "UPDATE mvcboard SET "
+        String sql = "UPDATE board SET "
                 + " downcount=downcount+1 "
                 + " WHERE idx=? "; 
         try {
@@ -158,7 +157,7 @@ public class BoardDAO extends JDBConnect {
     public boolean confirmPassword(String pass, String idx) {
     	boolean isCorr = true;
     	try {
-    		String sql = "select count(*) from mvcboard where pass=? and idx=?";
+    		String sql = "select count(*) from board where pass=? and idx=?";
     		psmt = con.prepareStatement(sql);
     		psmt.setString(1, pass);
     		psmt.setString(2, idx);
@@ -176,7 +175,7 @@ public class BoardDAO extends JDBConnect {
     public int deletePost(String idx) {
         int result = 0;
         try {
-            String query = "DELETE FROM mvcboard WHERE idx=?";
+            String query = "DELETE FROM board WHERE idx=?";
             psmt = con.prepareStatement(query);
             psmt.setString(1, idx);
             result = psmt.executeUpdate();
@@ -191,9 +190,9 @@ public class BoardDAO extends JDBConnect {
         int result = 0;
         try {
             // 쿼리문 템플릿 준비
-            String query = "UPDATE mvcboard"
+            String query = "UPDATE board"
                          + " SET title=?, name=?, content=?, ofile=?, sfile=? "
-                         + " WHERE idx=? and pass=?";
+                         + " WHERE idx=? ";
 
             // 쿼리문 준비
             psmt = con.prepareStatement(query);
@@ -203,7 +202,7 @@ public class BoardDAO extends JDBConnect {
             psmt.setString(4, dto.getOfile());
             psmt.setString(5, dto.getSfile());
             psmt.setString(6, dto.getIdx());
-            psmt.setString(7, dto.getPass());
+          //  psmt.setString(7, dto.getPass());
 
             // 쿼리문 실행
             result = psmt.executeUpdate();

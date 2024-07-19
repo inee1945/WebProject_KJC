@@ -9,9 +9,11 @@ public class BoardDTO {
 	private String ofile;
 	private String sfile;
 	private int downcount;
-	private String pass;
 	private int visitcount;
+	private String id;
 	
+	
+
 	public String getIdx() {
 		return idx;
 	}
@@ -60,17 +62,19 @@ public class BoardDTO {
 	public void setDowncount(int downcount) {
 		this.downcount = downcount;
 	}
-	public String getPass() {
-		return pass;
-	}
-	public void setPass(String pass) {
-		this.pass = pass;
-	}
+	
 	public int getVisitcount() {
 		return visitcount;
 	}
 	public void setVisitcount(int visitcount) {
 		this.visitcount = visitcount;
+	}
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 }

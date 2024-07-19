@@ -21,13 +21,15 @@ public class ListController extends HttpServlet{
 		Map<String, Object>map = new HashMap<String, Object>();
 		
 		//where절 필드명과 검색어
+		String bk = req.getParameter("bk");
+		String boardName = bk.equals("A")?"자유":(bk.equals("B")?"Q&A":"자료실");
 		String searchWord =	req.getParameter("searchWord");
 		String searchField = req.getParameter("searchField");
 		if(searchWord != null) {
 			map.put("searchWord", searchWord);
 			map.put("searchField", searchField);
 		}
-		int totalCnt = boardDao.selectCount(map);
+		int totalCount = boardDao.selectCount(map);
 		
 		//페이지네이션 처리.. 어렵다.
 		int pageSize = 10;
@@ -48,15 +50,17 @@ public class ListController extends HttpServlet{
 		
 		List<BoardDTO> boardLists = boardDao.getBoardList(map); 
 		
-		String pagingImg = BoardPage.pagingStr(totalCnt, pageSize, pageBlock, pageNum, "../board/list.do");
+		String pagingImg = BoardPage.pagingStr(totalCount, pageSize, pageBlock, pageNum, "../board/list.do");
 		map.put("pagingImg", pagingImg);
-		map.put("totalCnt", totalCnt);
+		map.put("totalCount", totalCount);
 		map.put("pageSize", pageSize);
 		map.put("pageNum",pageNum);
 		
+		req.setAttribute("bk", bk);
+		req.setAttribute("boardName", boardName);
 		req.setAttribute("boardLists", boardLists);
 		req.setAttribute("map", map);
 		
-		req.getRequestDispatcher("../board/List.jsp").forward(req, resp);
+		req.getRequestDispatcher("/jsp/list.jsp").forward(req, resp);
 	}
 }
