@@ -10,30 +10,36 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import oracle.jdbc.driver.Message;
 
-@WebServlet("/board/joinMod.do")
+@WebServlet("/member/joinMod.do")
 public class JoinModController extends HttpServlet{
+	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	String id =	req.getParameter("id");
+	System.out.println(id);
+	MemberDAO dao = new MemberDAO();
+	MemberDTO dto = dao.getMemInfo(id);
+	req.setAttribute("dto", dto);
+	req.getRequestDispatcher("/jsp/editRegister.jsp").forward(req, resp);
+
+	
+	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String id = 	req.getParameter("user_id");
-		String pwd = 	req.getParameter("user_pwd");
-		String name = 	req.getParameter("user_name");
+		String id = 	req.getParameter("id");
+		String pass = 	req.getParameter("pass");
+		String name = 	req.getParameter("name");
+		String email = 	req.getParameter("email");
+		String phone = req.getParameter("phone");
 		
 		MemberDAO dao = new MemberDAO();
-		int rs = dao.updateJoin(id, pwd, name);
-		dao.close();
+		int rs = dao.updateJoin(id, pass, name,email,phone);
 		
-    	HttpSession session=req.getSession();  
-    		
-		 // 로그인정보 저장 후 로그인화면으로 포워드
-		if(rs>=1) {
-			req.setAttribute("rs", rs);
-			session.setAttribute("UserId", id);
-			session.setAttribute("UserName",name);
-		    req.setAttribute("JoinErrMsg","회원정보 수정이 완료되었습니다..");
-		    req.getRequestDispatcher("/board/Login.jsp").forward(req, resp);
+	//가입	성공하면 로그인화면으로 포워드
+		if(rs==1) {
+			resp.sendRedirect("../member/login.do");
 		}else {
-			req.setAttribute("JoinErrMsg","회원정보 수정이 실패하였습니다.");
-			  req.getRequestDispatcher("/board/JoinMod.jsp").forward(req, resp);
+			  resp.sendRedirect("../member/join.do");
 		}
 		
 	}

@@ -52,17 +52,39 @@ public class MemberDAO extends JDBConnect {
     	}
     	return result;
     }
-    
-    //회원정보수정
-    public int updateJoin(String id, String pass, String name) {
+    //회원정보 불러오기
+    public MemberDTO getMemInfo(String id) {
     	MemberDTO dto = new MemberDTO();
-    	int result = 0;
-    	String query = "update member set   pass = ?, name =? , regidate=sysdate  where id = ? ";
+    	String query = "select * from member where id = ?";
     	try {
     		psmt = con.prepareStatement(query);
-    		psmt.setString(3, id);
+    		psmt.setString(1, id);
+    		rs = psmt.executeQuery();
+    		rs.next();
+    		dto.setId(rs.getString(1));
+    		dto.setPass(rs.getString(2));
+    		dto.setName(rs.getString(3));
+    		dto.setEmail(rs.getString(4));
+    		dto.setPhone(rs.getString(5));
+    		
+    	}catch(Exception e) {
+    		e.printStackTrace();
+    	}
+    
+    	return dto;
+    }
+    //회원정보수정
+    public int updateJoin(String id, String pass, String name ,String email ,String phone) {
+    	MemberDTO dto = new MemberDTO();
+    	int result = 0;
+    	String query = "update member set   pass = ?, name =? , email=? , phone=?  where id = ? ";
+    	try {
+    		psmt = con.prepareStatement(query);
+    		psmt.setString(5, id);
     		psmt.setString(1, pass);
     		psmt.setString(2, name);
+    		psmt.setString(3, email);
+    		psmt.setString(4, phone);
     		result = psmt.executeUpdate();
     	}catch(Exception e) {
     		e.printStackTrace();

@@ -24,10 +24,10 @@ public class JoinController extends HttpServlet{
 		String pass = 	req.getParameter("pass");
 		String name = 	req.getParameter("name");
 		String email = 	req.getParameter("email");
-		String mobile = req.getParameter("phone");
+		String phone = req.getParameter("phone");
 		
 		MemberDAO dao = new MemberDAO();
-		int rs = dao.setJoin(id, pass, name,email,mobile);
+		int rs = dao.setJoin(id, pass, name,email,phone);
 		
 	//가입	성공하면 로그인화면으로 포워드
 		if(rs==1) {

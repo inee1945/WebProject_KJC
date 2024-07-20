@@ -88,33 +88,43 @@
 <c:choose>
 	<c:when test="${  empty SessionId }">
 		<!-- 세션영역에 속성이 없을때는 로그아웃 상태이므로 "로그인"링크출력 -->
-	 <a class="sidebar-link" href="../member/login.do" aria-expanded="false">
-        <span>
-          <i class="ti ti-login"></i>
-        </span>
-        <span class="hide-menu">Login</span>
-      </a>
+	  
+	 	<a class="sidebar-link" href="../member/login.do" aria-expanded="false">
+        	<span>
+          	<i class="ti ti-login"></i>
+        	</span>
+        <span class="hide-menu">로그인</span>
+       </a>
+    
+      <li class="sidebar-item">
+        <a class="sidebar-link" href="../member/join.do" aria-expanded="false">
+          <span>
+            <i class="ti ti-user-plus"></i>
+          </span>
+          <span class="hide-menu">회원가입</span>
+        </a>
+      </li>
 	</c:when>
 	
 	<c:otherwise>
-	<a class="sidebar-link" href="../member/logout.do" aria-expanded="false">
+	   <a class="sidebar-link" href="../member/logout.do" aria-expanded="false">
         <span>
           <i class="ti ti-login"></i>
         </span>
-        <span class="hide-menu">Logout</span>
+        <span class="hide-menu">로그아웃</span>
       </a>
+      <li class="sidebar-item">
+       <a class="sidebar-link" href="../member/joinMod.do?id=${SessionId }" aria-expanded="false">
+         <span>
+           <i class="ti ti-user-plus"></i>
+         </span>
+         <span class="hide-menu">회원정보수정</span>
+       </a>
+     </li>
 	</c:otherwise>
 </c:choose>            
           
-            </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="../member/join.do" aria-expanded="false">
-                <span>
-                  <i class="ti ti-user-plus"></i>
-                </span>
-                <span class="hide-menu">Register</span>
-              </a>
-            </li>
+            
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">게시판</span>
