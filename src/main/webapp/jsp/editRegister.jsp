@@ -33,8 +33,25 @@
   }
  }
  </script> 
-               
+ <input type="hidden" id ="msg" value="${msg}">
+ <input type="hidden" id ="wNum" value="${wNum}">
+	
+	<script>
+	var wNum = $('#wNum').val();
+	var msg = $('#msg').val();
+	if(wNum =="Y"){
+		if(confirm(msg)){
+			
+			location.href="../board/deleteAll.do?id=${dto.id}";
+		
+		}else{
+			alert("아무일도일어나지 않습니다..");
+		}
+	}
+	</script>
+        <% session.removeAttribute("msg");  %>      
 <form name="registForm" method="post" action="joinMod.do" onsubmit="return formValidate(this);" >
+<input type="hidden" id = "mode" name="mode" value="U">
                   <div class="mb-3">
 <label for="exampleInputtext1" class="form-label">아이디</label>
 <input type="text" class="form-control" id="exampleInputtext1" 
@@ -64,7 +81,7 @@ aria-describedby="emailHelp" name="pass" value= "${dto.pass}">
  <input type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2"
  value="회원정보 수정" />
                   <div class="d-flex align-items-center justify-content-center">
-                    <p class="fs-4 mb-0 fw-bold">Already have an Account?</p>
+                   <button type = "submit" onclick="changeMode('D')" >회원탈퇴</button>
                   </div>
 </form>
               </div>

@@ -186,6 +186,20 @@ public class BoardDAO extends JDBConnect {
         }
         return result;
     }
+    //아디기준 전체삭제
+    public int deleteAllPost(String id) {
+    	int result = 0;
+    	try {
+    		String query = "delete from board where id = ?";
+    		psmt = con.prepareStatement(query);
+    		psmt.setString(1,id);
+    		result = psmt.executeUpdate();
+    		System.out.println("전체삭제 다오");
+    	}catch(Exception e) {
+    		e.printStackTrace();
+    	}
+    	return result;
+    }
     public int updatePost(BoardDTO dto) {
         int result = 0;
         try {

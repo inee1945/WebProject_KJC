@@ -33,6 +33,14 @@
   }
  }
  </script> 
+     
+      <input type="hidden" id ="msg" value="${msgJ}">
+	
+	<script>
+		var msg = $('#msgJ').val();
+		fnAlert(msg);
+	</script>
+              <% session.removeAttribute("msgJ");  %> 
                 
 <form name="registForm" method="post" action="join.do" onsubmit="return formValidate(this);" >
                   <div class="mb-3">

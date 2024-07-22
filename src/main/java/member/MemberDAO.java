@@ -38,18 +38,33 @@ public class MemberDAO extends JDBConnect {
     public int setJoin(String id, String pass, String name,String email, String phone) {
     	MemberDTO dto = new MemberDTO();
     	int result = 0;
-    	String query = "insert into member (id, pass, name, email, phone) values(?, ?,?,?,?)";
+    	
+    	String qur = "select count(*) from member where id = ?";
     	try {
-    		psmt = con.prepareStatement(query);
+    		psmt = con.prepareStatement(qur);
     		psmt.setString(1, id);
-    		psmt.setString(2, pass);
-    		psmt.setString(3, name);
-    		psmt.setString(4, email);;
-    		psmt.setString(5, phone);
-    		result = psmt.executeUpdate();
+    		rs = psmt.executeQuery();
+    		rs.next();
+    		if(rs.getInt(1)!=1) {
+    			String query = "insert into member (id, pass, name, email, phone) values(?, ?,?,?,?)";
+    	    	try {
+    	    		psmt = con.prepareStatement(query);
+    	    		psmt.setString(1, id);
+    	    		psmt.setString(2, pass);
+    	    		psmt.setString(3, name);
+    	    		psmt.setString(4, email);;
+    	    		psmt.setString(5, phone);
+    	    		result = psmt.executeUpdate();
+    	    	}catch(Exception e) {
+    	    		e.printStackTrace();
+    	    		result = 100;
+    	    	}
+    		}
     	}catch(Exception e) {
     		e.printStackTrace();
     	}
+    	
+    
     	return result;
     }
     //회원정보 불러오기
@@ -86,6 +101,36 @@ public class MemberDAO extends JDBConnect {
     		psmt.setString(3, email);
     		psmt.setString(4, phone);
     		result = psmt.executeUpdate();
+    		System.out.println("업데이트 성공");
+    	}catch(Exception e) {
+    		e.printStackTrace();
+    	}
+    	return result;
+    }
+    //회원탈퇴
+    public int deleteJoin(String id) {
+    	int result = 2;
+    	String query = "delete from member where id = ?";
+    	try {
+    		psmt = con.prepareStatement(query);
+    		psmt.setString(1, id);
+    		result =psmt.executeUpdate();
+    		if(result==1)result=3;
+    	}catch(Exception e ) {
+    		e.printStackTrace();
+    	}
+    	return result;
+    }
+    //게시물 작성여부
+    public int writeListYn(String id) {
+    	int result = 0 ;
+    	String query = "select count(*) from board where id = ?";
+    	try {
+    		psmt = con.prepareStatement(query);
+    		psmt.setString(1, id);
+    		rs = psmt.executeQuery();
+    		rs.next();
+    		result = rs.getInt(1);
     	}catch(Exception e) {
     		e.printStackTrace();
     	}

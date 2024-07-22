@@ -79,7 +79,7 @@
             <button type="button" onclick="location.href='../board/edit.do?idx=${ param.idx }&bk=${bk}';">
                 수정하기
             </button>
-            <button type="button" onclick="location.href='../board/delete.do?&idx=${ param.idx }&&bk=${bk}';">
+            <button type="button" onclick="location.href='../board/delete.do?&idx=${ param.idx }&bk=${bk}';">
                 삭제하기
             </button>
           </c:if>

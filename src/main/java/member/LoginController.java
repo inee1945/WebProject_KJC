@@ -26,14 +26,18 @@ public class LoginController extends HttpServlet {
 	   
     	String id = req.getParameter("id");
     	String pass = req.getParameter("pass");
-    	
+    	String msg= "";
 		MemberDAO dao = new MemberDAO();
 		MemberDTO dto = dao.getMember(id, pass);
     	
-		if(dto.getId().equals("")) {
+		HttpSession session=req.getSession();  
+		if(dto.getId()==null) {
+			 msg = "아이디가 없거나 비밀번호가 다릅니다.";
+			session.setAttribute("msg",msg);
 			resp.sendRedirect("../member/login.do");
 		}else {
-			HttpSession session=req.getSession();  
+			msg = dto.getName()+" 님께서 로그인 하셨습니다.";
+			session.setAttribute("msg",msg);
 			session.setAttribute("SessionId", dto.getId());
 			session.setAttribute("SessionName", dto.getName());
 			resp.sendRedirect("../main/index.do");

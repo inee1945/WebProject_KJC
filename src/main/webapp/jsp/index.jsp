@@ -6,6 +6,13 @@
 <body>
 
 
+ <input type="hidden" id ="msg" value="${msg}">
+	<script>
+		var msg = $('#msg').val();
+		fnAlert(msg);
+	
+	</script>
+<% session.removeAttribute("msg");  %>
   <!--  Body Wrapper -->
   <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
     data-sidebar-position="fixed" data-header-position="fixed">
